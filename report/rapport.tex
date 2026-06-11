@@ -1,0 +1,502 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!10},
+    language=C++,
+    showstringspaces=false
+}
+
+\title{Projet final -- CSC\_43043\_EP : Île tropicale\\
+\large Modélisation géométrique et programmation graphique}
+\author{% TODO: remplacer par les noms des membres de l'équipe
+Nom Prénom 1 \and Nom Prénom 2}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Ce projet implémente une scène 3D interactive représentant une île
+tropicale, développée avec la bibliothèque CGP utilisée dans le cours
+de programmation graphique (CSC\_43043\_EP). La scène comprend un
+terrain généré procéduralement (avec une crevasse / faille centrale),
+un océan animé avec reflets du ciel, un ciel sous forme de skybox, une
+forêt de palmiers et d'arbres tropicaux affichés par \emph{instancing}
+GPU, une population d'oiseaux animés survolant la forêt, ainsi qu'un
+bateau, une épave et un coffre au trésor posés sur le fond marin.
+
+Ce rapport présente les principales techniques mises en \oe{}uvre, en
+les reliant aux notions vues en cours (rasterisation, modèle
+d'illumination de Phong, texturage, \emph{shadow mapping},
+\emph{environment mapping}, bruit procédural et \emph{instancing} GPU),
+ainsi que les difficultés techniques rencontrées et les choix
+d'optimisation effectués pour obtenir une scène jouable en temps réel.
+
+\section{Vue d'ensemble de la scène}
+
+La scène est construite autour des éléments géométriques suivants :
+
+\begin{itemize}
+    \item un \textbf{terrain} (\texttt{mesh\_primitive\_grid}, grille de
+    $200 \times 200$ sommets sur une surface de $50\times 50$ unités),
+    déformé procéduralement pour former une île avec une faille
+    centrale (section~\ref{sec:crevasse}) ;
+    \item un plan d'\textbf{eau} (même résolution de grille), animé en
+    temps réel pour simuler des vagues (section~\ref{sec:vagues}) et
+    réfléchissant le ciel (section~\ref{sec:reflets}) ;
+    \item un \textbf{ciel} sous forme de sphère texturée englobant toute
+    la scène, faisant office de \emph{skybox} (section~\ref{sec:skybox}) ;
+    \item une \textbf{végétation} composée de palmiers et d'arbres
+    tropicaux, dupliqués en grand nombre par \emph{instancing} GPU
+    (section~\ref{sec:vegetation}) ;
+    \item des \textbf{oiseaux} animés qui décrivent des trajectoires en
+    orbite autour de la forêt (section~\ref{sec:animation}) ;
+    \item un \textbf{bateau}, une \textbf{épave} et un \textbf{coffre au
+    trésor}, posés sur le fond marin pour enrichir la scène ;
+    \item un système d'\textbf{ombres portées} calculé par
+    \emph{shadow mapping} (section~\ref{sec:ombres}).
+\end{itemize}
+
+Toutes les surfaces sont éclairées avec le modèle d'illumination de
+Phong (composantes ambiante, diffuse et spéculaire), comme vu dans le
+cours, à travers le couple de shaders
+\texttt{shaders/mesh/mesh.vert.glsl} et
+\texttt{shaders/mesh/mesh.frag.glsl}.
+
+\section{Génération du terrain et la crevasse}
+\label{sec:crevasse}
+
+Le terrain part d'une grille plane (\texttt{mesh\_primitive\_grid})
+dont chaque sommet est déplacé verticalement par la fonction
+\texttt{deform\_terrain()} (\texttt{src/scene.cpp}). Cette fonction
+combine plusieurs couches de \textbf{bruit de Perlin}
+(\texttt{noise\_perlin}), une notion directement issue du cours sur le
+bruit procédural, pour façonner le relief :
+
+\begin{enumerate}
+    \item \textbf{Masque de continent} : la position $(x,y)$ de chaque
+    sommet est d'abord ``déformée'' (\emph{domain warping}) par du bruit
+    de Perlin, puis on calcule un masque gaussien
+    $\exp(-d^2/40)$ qui définit la silhouette générale de l'île.
+    \item \textbf{La faille (crevasse)} : une seconde couche de bruit de
+    Perlin distord une ligne suivant l'axe $y$
+    (\texttt{fault\_distortion}). La distance d'un point à cette ligne
+    est passée dans une fonction \texttt{smoothstep(0.8, 2.5, dist)} :
+    en dessous de $0.8$, le point est considéré comme appartenant au
+    \emph{canyon} (donc immergé), au-delà de $2.5$ il appartient
+    pleinement au relief de l'île. Ce profil, multiplié au masque de
+    continent, ``découpe'' littéralement l'île en deux par une gorge
+    sinueuse : c'est la \textbf{crevasse} centrale de la scène.
+    \item \textbf{Relief rocheux (fBm)} : une somme de 4 octaves de
+    bruit de Perlin en valeur absolue (\emph{fractional Brownian
+    motion}, $|noise|$ pour obtenir des arêtes anguleuses) module
+    l'altitude des falaises et sommets.
+    \item \textbf{Calcul final de l'altitude} : à l'intérieur de l'île
+    (\texttt{island\_mask > 0.01}), l'altitude vaut
+    $z = \text{niveau\_mer} + \text{island\_mask}\times h_{\max} -
+    \text{mountain\_noise}\times \text{island\_mask}$, avec
+    $h_{\max}=8$. À l'extérieur (dans le canyon ou l'océan), l'altitude
+    redescend vers le fond marin ($z=-5$), légèrement bruité pour éviter
+    un fond plat.
+\end{enumerate}
+
+Le résultat est une île massive coupée en son centre par une gorge
+profonde aux parois quasi verticales, donnant un fort effet de vertige
+lorsqu'on survole le bord de la faille -- d'où son nom de
+\emph{crevasse}. Les normales du maillage sont ensuite recalculées
+(\texttt{m.normal\_update()}) pour que l'éclairage de Phong réponde
+correctement à ce relief escarpé.
+
+\section{Animation des vagues}
+\label{sec:vagues}
+
+Le plan d'eau est représenté par un second \texttt{mesh\_primitive\_grid}
+($200\times 200$, même emprise que le terrain), stocké côté CPU dans
+\texttt{water\_mesh}. À chaque image, la fonction \texttt{idle\_frame()}
+parcourt l'ensemble des sommets et met à jour leur composante $z$ :
+
+\begin{lstlisting}
+for (int k = 0; k < water_mesh.position.size(); ++k) {
+    vec3& p = water_mesh.position[k];
+    float wave1 = 0.20f * std::sin(0.6f * p.x + 1.2f * time);
+    float wave2 = 0.15f * std::sin(0.8f * p.y + 1.7f * time + 0.5f);
+    float noise = 0.15f * noise_perlin({ p.x*0.2f + time*0.1f,
+                                          p.y*0.2f + time*0.1f });
+    p.z = water_base_z + wave1 + wave2 + noise;
+}
+water_mesh.normal_update();
+\end{lstlisting}
+
+La houle est donc la superposition de \textbf{deux ondes
+sinusoïdales} se propageant selon $x$ et $y$ avec des fréquences et
+phases différentes (pour éviter un motif trop régulier), à laquelle on
+ajoute une couche de \textbf{bruit de Perlin animé dans le temps}
+(le décalage \texttt{time*0.1} fait ``dériver'' le bruit, donnant
+l'impression d'un clapot irrégulier en plus de la houle principale).
+
+Les normales sont ensuite recalculées à partir des nouvelles positions,
+ce qui est essentiel : ce sont elles qui pilotent à la fois
+l'éclairage de Phong de l'eau et le calcul du reflet du ciel
+(section~\ref{sec:reflets}).
+
+\paragraph{Mise à jour GPU sans fuite mémoire.} Plutôt que d'appeler
+\texttt{water.initialize\_data\_on\_gpu(water\_mesh)} à chaque image
+(ce qui réalloue un nouveau VBO sans libérer l'ancien et provoque une
+fuite mémoire GPU et un avertissement \texttt{cgp}), les nouvelles
+positions et normales sont envoyées directement dans les buffers déjà
+alloués via :
+\begin{lstlisting}
+water.vbo_position.update(water_mesh.position);
+water.vbo_normal.update(water_mesh.normal);
+\end{lstlisting}
+Cette mise à jour \emph{en place} correspond à la bonne pratique
+indiquée par \texttt{cgp} pour l'animation de maillages et a permis de
+corriger une importante chute de performance observée initialement.
+
+\section{Ciel et \emph{skybox}}
+\label{sec:skybox}
+
+Le ciel est représenté par une grande sphère
+(\texttt{mesh\_primitive\_sphere}) de rayon $1$, mise à l'échelle d'un
+facteur $100$ (\texttt{sky.model.scaling = 100.f}) afin d'englober
+toute la scène et de rester visuellement ``à l'infini'' quels que
+soient les déplacements de la caméra. Cette sphère est texturée par
+l'image \texttt{assets/sky.jpg} appliquée en projection
+\textbf{équirectangulaire} (coordonnées UV de la sphère $\to$ image
+panoramique du ciel).
+
+Pour que la sphère apparaisse comme un arrière-plan uniforme et non
+comme un objet éclairé, ses coefficients de Phong sont réglés à
+\texttt{ambient = 1.0}, \texttt{diffuse = 0.0}, \texttt{specular = 0.0} :
+seule la couleur de la texture est restituée, sans ombrage --
+exactement le principe d'une \emph{skybox} vu en cours (un environnement
+englobant non affecté par l'éclairage de la scène, qui donne l'illusion
+d'un horizon lointain).
+
+La même image est chargée une seconde fois dans \texttt{texture\_sky},
+cette fois utilisée comme \textbf{texture d'environnement} pour le
+calcul des reflets sur l'eau (section suivante).
+
+\section{Reflets du ciel sur l'eau}
+\label{sec:reflets}
+
+Le calcul des reflets est effectué dans
+\texttt{shaders/mesh/mesh.frag.glsl}, dans la branche activée par
+\texttt{is\_water == 1}. Pour chaque fragment de la surface de l'eau :
+
+\begin{enumerate}
+    \item on calcule le \textbf{vecteur de vue} $V$ (de la surface vers
+    la caméra) et le \textbf{vecteur réfléchi} $R = \text{reflect}(-V,
+    N)$ par rapport à la normale $N$ du fragment -- exactement la
+    fonction \texttt{reflect()} d'\emph{environment mapping} vue en
+    cours ;
+    \item ce vecteur $R$ est converti en coordonnées sphériques
+    $(\varphi,\theta)$ puis en UV par projection équirectangulaire,
+    pour échantillonner \texttt{sky\_texture} (= \texttt{texture\_sky})
+    : on ``regarde'' ainsi le ciel dans la direction réfléchie ;
+    \item un terme de \textbf{Fresnel} approché,
+    $f = (1-\max(V\cdot N,0))^3$, augmente la part de réflexion lorsque
+    le regard est rasant par rapport à la surface (effet observé sur
+    une vraie étendue d'eau : on voit le fond de près, le ciel se
+    reflète à l'horizon) ;
+    \item la couleur finale de l'eau est un mélange
+    (\texttt{mix}) entre la couleur diffuse/Phong de l'eau et la
+    couleur du ciel échantillonnée, pondéré par le facteur de Fresnel et
+    par un coefficient global \texttt{reflectivity} (réglé à $0.85$,
+    proche d'un miroir).
+\end{enumerate}
+
+Comme les normales de l'eau varient à chaque image sous l'effet des
+vagues (section~\ref{sec:vagues}), la direction $R$ varie elle aussi,
+ce qui fait ``onduler'' le reflet du ciel à la surface de l'eau --
+renforçant l'impression de mouvement.
+
+Par ailleurs, lorsque la caméra passe sous le niveau de l'eau
+(\texttt{camera\_position.z < water\_level\_b}), la couleur ambiante de
+toutes les surfaces est mélangée avec une teinte bleue, simulant
+l'atténuation de la lumière sous l'eau.
+
+\paragraph{Remarque.} Une variable \texttt{reflec} a été conservée dans
+le code comme uniforme générique préparatoire à des expérimentations
+supplémentaires de réflexion ; elle n'est pas utilisée par le shader
+par défaut (id=3), ce qui produit un avertissement \texttt{cgp}
+inoffensif (\emph{``Try to send uniform variable [reflec] to a shader
+that doesn't use it''}), sans impact sur le rendu.
+
+\section{Ombres portées (\emph{shadow mapping})}
+\label{sec:ombres}
+
+Le rendu des ombres suit la technique classique du \emph{shadow
+mapping} en deux passes, vue en cours :
+
+\paragraph{1. Passe de profondeur (point de vue de la lumière).}
+Une direction de lumière directionnelle fixe \texttt{light\_direction}
+définit une caméra orthographique placée loin de la scène dans cette
+direction. La matrice \texttt{light\_view\_projection} combine une
+matrice de vue (translation vers la position de la lumière) et une
+matrice de \textbf{projection orthographique} construite manuellement
+(adaptée à une lumière directionnelle, sans perspective). La scène est
+rendue depuis ce point de vue dans un \emph{framebuffer object} dédié
+(\texttt{shadow\_fbo}, de résolution $1024\times 1024$, en mode
+\texttt{depth} uniquement), à l'aide d'une paire de shaders minimalistes
+(\texttt{shaders/shadow/shadow\_depth.vert.glsl} /
+\texttt{.frag.glsl}) qui ne calculent que
+\texttt{gl\_Position = light\_view\_projection * model * position} et
+ne produisent aucune couleur -- seul le \emph{depth buffer} est
+exploité.
+
+\paragraph{2. Passe principale.} La texture de profondeur résultante est
+liée à l'unité de texture 5 (\texttt{shadow\_map}) et la matrice
+\texttt{light\_view\_projection} est envoyée comme uniforme. Dans
+\texttt{mesh.frag.glsl}, pour chaque fragment :
+\begin{enumerate}
+    \item sa position monde est projetée dans l'espace de la lumière
+    (\texttt{light\_space = light\_view\_projection * position}), puis
+    ramenée en coordonnées de texture $[0,1]$ ;
+    \item sa profondeur \texttt{current\_depth} est comparée à la
+    profondeur stockée dans \texttt{shadow\_map} via un filtrage
+    \textbf{PCF (Percentage-Closer Filtering) $3\times 3$} : on moyenne
+    le résultat du test sur les 9 texels voisins, ce qui adoucit les
+    bords des ombres et réduit l'aliasing ;
+    \item un biais (\texttt{shadow\_bias = 0.007}) évite l'\emph{acné de
+    surface} (auto-ombrage parasite dû à la précision limitée de la
+    profondeur) ;
+    \item si le fragment est occulté, sa couleur finale est multipliée
+    par \texttt{shadow\_strength = 0.55} (l'ombre atténue la lumière
+    sans la supprimer totalement).
+\end{enumerate}
+
+L'eau est explicitement exclue du calcul d'ombre
+(\texttt{use\_shadow = 0} pendant son rendu) afin de ne pas perturber
+le calcul des reflets.
+
+\paragraph{Optimisation.} La résolution de la \emph{shadow map} a été
+réduite de $2048$ à $1024$ pixels : sur le GPU intégré utilisé pour les
+tests (Intel HD Graphics 630), cela divise par quatre le coût de la
+passe de profondeur sans dégradation visible à l'échelle de la scène,
+contribuant à maintenir un \emph{framerate} jouable malgré le grand
+nombre d'objets dessinés deux fois (passe ombre + passe principale).
+
+\section{Végétation : \emph{instancing} GPU et difficulté de
+``tree2''}
+\label{sec:vegetation}
+
+\subsection{Principe de l'\emph{instancing}}
+
+La forêt est composée de deux familles d'objets : des \textbf{palmiers}
+(un seul maillage) et des \textbf{arbres tropicaux} (``tree2'',
+décomposés en plusieurs parties, voir ci-dessous). Plutôt que
+d'effectuer un appel de dessin (\emph{draw call}) par arbre -- ce qui
+serait prohibitif pour des centaines d'arbres -- chaque type d'objet
+est dessiné en une seule fois grâce au \textbf{\emph{GPU instancing}}
+(\texttt{glDrawElementsInstanced} / \texttt{gl\_InstanceID}, vu en
+cours).
+
+Concrètement (\texttt{initialize\_instancing()} /
+\texttt{draw\_part\_instanced()} dans \texttt{scene.cpp}) :
+\begin{itemize}
+    \item des VBOs supplémentaires sont attachés au VAO de chaque objet,
+    aux \texttt{layout location} 4 à 8 du \emph{vertex shader}
+    (\texttt{instance\_model\_col0..3} pour les 4 colonnes de la matrice
+    modèle, \texttt{instance\_color} pour une teinte par instance) ;
+    \item ces attributs ont un \emph{divisor} de 1
+    (\texttt{glVertexAttribDivisor}) : ils changent une fois par
+    \emph{instance} et non par sommet ;
+    \item à chaque image, on remplit ces tableaux avec les matrices
+    modèles (position, échelle, rotation aléatoire) de toutes les
+    instances, on les envoie au GPU, puis un \textbf{unique} appel
+    \texttt{glDrawElementsInstanced} dessine toutes les copies.
+\end{itemize}
+
+Dans \texttt{mesh.vert.glsl}, un booléen \texttt{use\_instancing}
+sélectionne entre la matrice modèle uniforme classique et la matrice
+modèle reconstruite à partir des 4 colonnes par instance.
+
+\subsection{Placement procédural}
+
+Les positions des palmiers (\texttt{tree\_positions}/\texttt{tree\_scales})
+et des arbres ``tree2'' (\texttt{tree2\_positions}/\texttt{tree2\_scales})
+sont tirées aléatoirement parmi les sommets du \texttt{terrain\_mesh}
+déjà généré (section~\ref{sec:crevasse}), en ne conservant que les
+points dont l'altitude et la pente correspondent à une zone de forêt
+``plausible'' (au-dessus du niveau de la mer, hors falaises trop
+abruptes). Chaque arbre reçoit en plus une échelle et une rotation
+autour de l'axe vertical tirées aléatoirement, ce qui évite l'effet de
+répétition visuelle typique de l'\emph{instancing} naïf.
+
+\subsection{Difficulté rencontrée : ``tree2'' livré comme un seul
+fichier OBJ multi-objets}
+
+Le modèle d'arbre tropical (\texttt{trees9.obj}) a posé une difficulté
+spécifique : contrairement au palmier, qui est un maillage unique,
+\textbf{toutes les parties de l'arbre (tronc, écorce, branches,
+feuillage...) sont regroupées dans un seul fichier OBJ}, sous la forme
+de 8 sous-objets nommés à l'intérieur du fichier :
+\texttt{Walnut\_L}, \texttt{Mossy\_Tr}, \texttt{Bark\_\_\_S},
+\texttt{Bark\_\_\_0}, \texttt{Bottom\_T}, \texttt{Sonnerat},
+\texttt{Bark\_\_\_1} et \texttt{Oak\_Leav}, totalisant à eux seuls
+environ \textbf{740~000 sommets}.
+
+Cela posait deux problèmes :
+\begin{enumerate}
+    \item \textbf{Texturage/matériaux différents par partie} : écorce,
+    feuillage et branches mortes n'ont pas la même texture/couleur ; il
+    fallait donc pouvoir dessiner chaque partie séparément avec son
+    propre matériau, ce qui est impossible si l'OBJ est chargé comme un
+    bloc unique ;
+    \item \textbf{Instancing par partie} : pour appliquer
+    l'\emph{instancing} décrit ci-dessus, chaque partie doit posséder
+    son propre \texttt{mesh\_drawable} (son propre VAO/VBO), donc être
+    \emph{séparée} avant l'envoi sur GPU.
+\end{enumerate}
+
+La solution retenue a été d'utiliser \texttt{mesh\_load\_file\_obj}
+en conservant le découpage par \emph{nom d'objet} défini dans le
+fichier OBJ (lignes \texttt{o <nom>}), produisant un
+\texttt{std::vector<mesh\_drawable>}
+\texttt{tree2\_parts} de 8 éléments. Chaque partie est ensuite
+initialisée sur GPU et préparée pour l'\emph{instancing}
+indépendamment :
+\begin{lstlisting}
+for (auto& part : tree2_parts) {
+    initialize_instancing(part);
+}
+\end{lstlisting}
+Au moment du dessin, les 8 parties sont dessinées avec les
+\emph{mêmes} matrices de transformation par instance (un arbre =
+8~appels \texttt{draw\_part\_instanced}, un par partie), de sorte que
+chaque arbre reste visuellement cohérent (toutes ses parties sont
+translatées/mises à l'échelle/tournées ensemble) tout en autorisant des
+matériaux différents par partie.
+
+\paragraph{Compromis de performance.} Avec $\sim$740~000 sommets par
+arbre et 8~appels de dessin instanciés par passe (×2 passes pour
+l'ombre), le coût en sommets traités croît très vite avec le nombre
+d'instances. Sur le GPU intégré utilisé pour les tests, des essais à 8,
+20 puis 150 instances ont montré une dégradation nette du
+\emph{framerate} au-delà d'une vingtaine d'instances. Le nombre final a
+été fixé à \textbf{50 arbres ``tree2''} et \textbf{140 palmiers}
+(maillage bien plus léger), un compromis choisi délibérément pour
+privilégier la \textbf{densité visuelle} de la forêt au prix d'un
+\emph{framerate} réduit.
+
+\section{Textures}
+
+Plusieurs textures \texttt{cgp::opengl\_texture\_image\_structure} sont
+utilisées :
+
+\begin{itemize}
+    \item \textbf{\texttt{texture\_rock}} et \textbf{\texttt{texture\_grass}}
+    (avec une texture de sable intégrée comme texture principale du
+    terrain) : le terrain mélange ces trois textures
+    \emph{procéduralement} dans \texttt{mesh.frag.glsl}
+    (\texttt{is\_terrain == 1}) en fonction de l'altitude
+    \texttt{fragment.position.z} et de la pente
+    \texttt{fragment.normal.z} :
+    \begin{itemize}
+        \item la roche (\texttt{texture\_rock}) est appliquée sur les
+        pentes fortes (\texttt{slope} faible), via
+        \texttt{smoothstep(0.150, 0.20, slope)} ;
+        \item le sable apparaît près du niveau de la mer (basse
+        altitude) ;
+        \item l'herbe (\texttt{texture\_grass}) recouvre le reste.
+    \end{itemize}
+    Les trois contributions sont mélangées par interpolation
+    (\emph{triplanar-like blending} basé sur la hauteur et la pente),
+    chacune étant échantillonnée avec un facteur d'agrandissement
+    différent (\texttt{uv*8}, \texttt{uv*6}, \texttt{uv*10}) pour éviter
+    un effet de répétition trop visible ;
+    \item \textbf{\texttt{texture\_sky}} : texture panoramique du ciel
+    (\texttt{assets/sky.jpg}), utilisée à la fois pour la \emph{skybox}
+    (section~\ref{sec:skybox}) et pour les reflets sur l'eau
+    (section~\ref{sec:reflets}) ;
+    \item les autres maillages (palmiers, arbres ``tree2'', bateau,
+    épave, coffre, oiseaux) possèdent chacun leur(s) propre(s) texture(s)
+    chargée(s) avec le maillage, appliquées via
+    \texttt{image\_texture} et le modèle de Phong standard.
+\end{itemize}
+
+\section{Animation des oiseaux}
+\label{sec:animation}
+
+Une population d'oiseaux (\texttt{BirdGroup}) survole la scène. Chaque
+groupe possède des paramètres d'orbite elliptique
+(\texttt{orbit\_radius\_x}, \texttt{orbit\_radius\_y},
+\texttt{base\_altitude}, \texttt{angular\_speed}, \texttt{phase}) : la
+position de chaque oiseau à l'instant $t$ est calculée par
+$x = r_x \cos(\omega t + \phi)$, $y = r_y \sin(\omega t + \phi)$,
+$z = z_0$, ce qui produit une trajectoire elliptique fermée autour d'un
+centre. Certains groupes (\texttt{forest\_bird = true}) effectuent en
+plus un aller-retour entre un nid (\texttt{nest\_position}) situé dans
+la forêt et leur orbite, sur une durée \texttt{tour\_duration}.
+
+L'orientation de chaque oiseau (vecteur \texttt{bird\_direction}) est
+déduite de la dérivée de sa trajectoire (direction du déplacement), et
+un battement d'ailes est simulé en faisant osciller l'angle des ailes
+(\texttt{bird\_wing\_angle}) selon une sinusoïde
+(\texttt{bird\_wing\_amplitude}, \texttt{bird\_wing\_frequency}). Les
+différentes parties de l'oiseau (corps, tête, bec, ailes, queue) sont
+chacune des \texttt{mesh\_drawable} distincts, dessinés -- comme la
+végétation -- via \texttt{draw\_part\_instanced} pour gérer
+efficacement plusieurs dizaines d'oiseaux en quelques appels de dessin,
+y compris dans la passe d'ombre (les oiseaux projettent une ombre sur
+le sol/l'eau).
+
+\section{Optimisations de performance}
+
+Pour conserver un rendu interactif malgré la richesse de la scène
+(île + crevasse, eau animée, ciel, ombres, $\sim$190 arbres instanciés,
+oiseaux), plusieurs optimisations ont été appliquées :
+
+\begin{itemize}
+    \item réduction de la résolution des grilles de terrain et d'eau de
+    $1000\times1000$ à $200\times200$ sommets (division par 25 du nombre
+    de triangles) ;
+    \item \emph{instancing} GPU pour les palmiers, les arbres ``tree2''
+    et les oiseaux, ramenant des centaines d'appels de dessin à
+    quelques appels par type d'objet ;
+    \item mise à jour \emph{en place} des VBOs de l'eau
+    (\texttt{vbo\_position.update}/\texttt{vbo\_normal.update}) au lieu
+    d'une réallocation par image, supprimant une fuite mémoire GPU
+    majeure ;
+    \item réduction de la résolution de la \emph{shadow map} de
+    $2048\times2048$ à $1024\times1024$.
+\end{itemize}
+
+Le nombre d'instances de végétation (140 palmiers, 50 arbres
+``tree2'') a finalement été choisi en privilégiant la densité de la
+forêt par rapport au \emph{framerate}, ce dernier restant néanmoins
+acceptable pour une démonstration sur le GPU intégré utilisé pendant le
+développement.
+
+\section{Conclusion}
+
+Ce projet met en \oe{}uvre l'ensemble de la chaîne de rendu vue en
+cours : génération procédurale de géométrie par bruit de Perlin
+(terrain, crevasse, vagues), modèle d'illumination de Phong, texturage
+multi-couches, \emph{environment mapping}/\emph{skybox} pour le ciel et
+ses reflets sur l'eau, \emph{shadow mapping} avec PCF, chargement et
+séparation de maillages OBJ multi-objets, et \emph{GPU instancing} pour
+peupler la scène d'une forêt et d'oiseaux animés. Les principales
+difficultés -- fuite mémoire sur l'eau animée, séparation du modèle
+d'arbre ``tree2'' livré en un seul fichier OBJ multi-objets, et coût en
+sommets de ce modèle -- ont été résolues ou contournées par des choix
+explicites de compromis qualité/performance, documentés ci-dessus.
+
+\end{document}

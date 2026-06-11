@@ -382,7 +382,7 @@ void scene_structure::initialize()
 	// ~740k vertices x 2 passes (shadow + main). On this integrated GPU, going much above
 	// ~8 instances drops the framerate back into single digits (tested: 8 -> ~7-8fps,
 	// 20 -> ~5fps, 150 -> ~1fps). Capped by max_instances (256) if increased.
-	int arbres2_souhaites = 26;
+	int arbres2_souhaites = 50;
 	int tentatives2_max = 20000;
 	int tentatives2 = 0;
 
