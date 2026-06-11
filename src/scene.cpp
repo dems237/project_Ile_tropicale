@@ -238,7 +238,10 @@ void scene_structure::initialize()
 	* * * * * * */
 
 	float L = 25.0f;
-	mesh terrain_mesh = mesh_primitive_grid({ -L,-L,0 }, { L,-L,0 }, { L,L,0 }, { -L,L,0 }, 1000, 1000);
+	// NOTE: 1000x1000 (1M vertices / 2M triangles) was extreme overkill for a 50x50 unit
+	// terrain (a vertex every 5cm) and was a major part of the per-frame GPU vertex load.
+	// 200x200 keeps the terrain shape/detail visually identical while dividing its cost by 25.
+	mesh terrain_mesh = mesh_primitive_grid({ -L,-L,0 }, { L,-L,0 }, { L,L,0 }, { -L,L,0 }, 200, 200);
 	// ...
 	deform_terrain(terrain_mesh);
 	
@@ -316,6 +319,8 @@ void scene_structure::initialize()
 	tree.initialize_data_on_gpu(mesh_load_file_obj(project::path + "assets/palm_tree/palm_tree.obj"));
 	tree.model.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 	tree.texture.load_and_initialize_texture_2d_on_gpu(project::path + "assets/palm_tree/palm_tree.jpg", GL_REPEAT, GL_REPEAT);
+	// Drawn instanced (one draw call for all palm trees instead of one per tree)
+	initialize_instancing(tree);
 
 	// --- NOUVEAU : PLANTATION DE LA FORÊT (Échantillonnage Aléatoire) ---
 	tree_positions.clear();
@@ -324,7 +329,11 @@ void scene_structure::initialize()
 	// Seed RNG for variability
 	std::srand((unsigned)std::time(nullptr));
 
-	int arbres_souhaites = 200; // Le nombre total d'arbres sur l'île
+	// NOTE: each palm tree (palm_tree.obj) is ~120k triangles. 200 instances drawn twice
+	// per frame (shadow pass + main pass) is ~48M triangles/frame just for palms - far
+	// beyond what an integrated GPU (Intel HD 630) can sustain. Reduced to keep a dense
+	// forest look while staying real-time.
+	int arbres_souhaites = 140; // Le nombre total d'arbres sur l'île
 	int tentatives_max = 20000; // Sécurité pour éviter une boucle infinie
 	int tentatives = 0;
 
@@ -366,7 +375,14 @@ void scene_structure::initialize()
 	tree2_positions.clear();
 	tree2_scales.clear();
 
-	int arbres2_souhaites = 150;
+	// NOTE: this is by far the heaviest asset in the scene - each instance (8 parts from
+	// trees9.obj) is ~740k vertices, i.e. more than 7x a whole palm tree. GPU instancing
+	// (draw_part_instanced) cuts this down to 8 draw calls/pass regardless of instance
+	// count, but it does NOT reduce the vertex-shader workload: every instance still costs
+	// ~740k vertices x 2 passes (shadow + main). On this integrated GPU, going much above
+	// ~8 instances drops the framerate back into single digits (tested: 8 -> ~7-8fps,
+	// 20 -> ~5fps, 150 -> ~1fps). Capped by max_instances (256) if increased.
+	int arbres2_souhaites = 26;
 	int tentatives2_max = 20000;
 	int tentatives2 = 0;
 
@@ -422,6 +438,13 @@ void scene_structure::initialize()
 		tree2_parts.push_back(d);
 		std::cout << "Objet charge : " << part.object_name << " (" << m.position.size() << " vertices)" << std::endl;
 	}
+
+	// Setup GPU instancing buffers for every tree2 part: instead of issuing
+	// tree2_positions.size() x tree2_parts.size() individual draw() calls per pass
+	// (each carrying its own uniform updates / driver overhead), all instances of a
+	// given part are drawn with a single instanced draw call (like the birds).
+	for (auto& part : tree2_parts)
+		initialize_instancing(part);
 
 
 
@@ -526,19 +549,17 @@ void scene_structure::initialize()
 		bird_body_mesh
 	);
 	
-	bird_body.material.color = { 0.65f, 0.65f, 0.68f };
+	// Color is now provided per-instance (see draw_part_instanced), keep material neutral
+	bird_body.material.color = { 1.0f, 1.0f, 1.0f };
 	bird_body.model.scaling = 0.2f;
 
 	//initializing the head now
 	bird_head.initialize_data_on_gpu(
 		mesh_primitive_sphere(0.45f)
 	);
-	
-	bird_head.material.color = {
-		0.8f,
-		0.8f,
-		0.82f
-	};
+
+	// Color is now provided per-instance (see draw_part_instanced), keep material neutral
+	bird_head.material.color = { 1.0f, 1.0f, 1.0f };
 	bird_head.model.scaling = 0.2f;
 
 
@@ -576,10 +597,11 @@ void scene_structure::initialize()
 	left_wing_mesh.fill_empty_field();
 
 	bird_left_wing.initialize_data_on_gpu(left_wing_mesh);
+	// Color is now provided per-instance (see draw_part_instanced), keep material neutral
 	bird_left_wing.material.color = {
-		0.55f,
-		0.55f,
-		0.58f
+		1.0f,
+		1.0f,
+		1.0f
 	};
 	bird_left_wing.model.scaling = 0.2f;
 
@@ -598,12 +620,20 @@ void scene_structure::initialize()
 	right_wing_mesh.fill_empty_field();
 
 	bird_right_wing.initialize_data_on_gpu(right_wing_mesh);
+	// Color is now provided per-instance (see draw_part_instanced), keep material neutral
 	bird_right_wing.material.color = {
-		0.55f,
-		0.55f,
-		0.58f
+		1.0f,
+		1.0f,
+		1.0f
 	};
 	bird_right_wing.model.scaling = 0.2f;
+
+	// Setup GPU instancing buffers (per-instance model matrix + color) for all bird parts
+	initialize_instancing(bird_body);
+	initialize_instancing(bird_head);
+	initialize_instancing(bird_beak);
+	initialize_instancing(bird_left_wing);
+	initialize_instancing(bird_right_wing);
 
 
 	// Choisir une position de nid dans la forêt (un des arbres existants)
@@ -658,6 +688,61 @@ void scene_structure::initialize()
 	light_view_projection = proj_light * view_light;
 
 	std::cout << "End function scene_structure::initialize()" << std::endl;
+}
+
+
+
+// Setup the per-instance VBOs (model matrix columns + color multiplier) used to draw
+// many copies of a bird part with a single glDrawElementsInstanced call.
+void scene_structure::initialize_instancing(mesh_drawable& part)
+{
+	numarray<vec4> identity_col0(max_instances);
+	numarray<vec4> identity_col1(max_instances);
+	numarray<vec4> identity_col2(max_instances);
+	numarray<vec4> identity_col3(max_instances);
+	numarray<vec3> white_color(max_instances);
+
+	identity_col0.fill({ 1.0f, 0.0f, 0.0f, 0.0f });
+	identity_col1.fill({ 0.0f, 1.0f, 0.0f, 0.0f });
+	identity_col2.fill({ 0.0f, 0.0f, 1.0f, 0.0f });
+	identity_col3.fill({ 0.0f, 0.0f, 0.0f, 1.0f });
+	white_color.fill({ 1.0f, 1.0f, 1.0f });
+
+	part.initialize_supplementary_data_on_gpu(identity_col0, 4, 1);
+	part.initialize_supplementary_data_on_gpu(identity_col1, 5, 1);
+	part.initialize_supplementary_data_on_gpu(identity_col2, 6, 1);
+	part.initialize_supplementary_data_on_gpu(identity_col3, 7, 1);
+	part.initialize_supplementary_data_on_gpu(white_color, 8, 1);
+}
+
+// Upload the per-instance model matrices and colors for one mesh part, then draw all
+// instances with a single instanced draw call instead of one draw() per instance.
+void scene_structure::draw_part_instanced(mesh_drawable& part, std::vector<mat4> const& models, std::vector<vec3> const& colors)
+{
+	int const n = int(models.size());
+	if (n == 0)
+		return;
+
+	assert_cgp(n <= max_instances, "Too many instances for the instancing buffer");
+
+	for (int k = 0; k < n; ++k) {
+		mat4 const& M = models[k];
+		instance_col0[k] = M.col_x();
+		instance_col1[k] = M.col_y();
+		instance_col2[k] = M.col_z();
+		instance_col3[k] = M.col_w();
+		instance_color[k] = colors[k];
+	}
+
+	part.update_supplementary_data_on_gpu(instance_col0, 4, n);
+	part.update_supplementary_data_on_gpu(instance_col1, 5, n);
+	part.update_supplementary_data_on_gpu(instance_col2, 6, n);
+	part.update_supplementary_data_on_gpu(instance_col3, 7, n);
+	part.update_supplementary_data_on_gpu(instance_color, 8, n);
+
+	environment.uniform_generic.uniform_int["use_instancing"] = 1;
+	draw(part, environment, n);
+	environment.uniform_generic.uniform_int["use_instancing"] = 0;
 }
 
 
@@ -744,68 +829,17 @@ void scene_structure::display_frame()
 	// Update time
 	timer.update();
 
-	
-
-	// Draw all the shapes
-
-	// ---------- Shadow pass ----------
-	GLint prev_viewport[4]; glGetIntegerv(GL_VIEWPORT, prev_viewport);
-	glViewport(0, 0, shadow_fbo.width, shadow_fbo.height);
-	shadow_fbo.bind();
-	glClear(GL_DEPTH_BUFFER_BIT);
-
-	mat4 prev_proj = environment.camera_projection;
-	mat4 prev_view = environment.camera_view;
-	environment.camera_projection = light_view_projection;
-	environment.camera_view = mat4::build_identity();
-
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(2.0f, 4.0f);
-
-	// Terrain
-	draw(terrain, environment);
-
-	// Palmiers
-	for (int i = 0; i < tree_positions.size(); ++i) {
-		tree.model.translation = tree_positions[i];
-		if (i < tree_scales.size()) tree.model.scaling = tree_scales[i];
-		draw(tree, environment);
-	}
-
-	// Tree2
-	for (int i = 0; i < tree2_positions.size(); ++i) {
-
-		rotation_transform redressement = rotation_transform::from_axis_angle({ 1, 0, 0 }, 3.14159f / 2.0f);
-		float angle_aleatoire = float(i) * 1.37f;
-		rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
-		rotation_transform rot = pivot * redressement;
-		float scale = (i < tree2_scales.size()) ? tree2_scales[i] : 1.0f;
-
-		// Dessiner toutes les parties au même endroit
-		for (auto& part : tree2_parts) {
-			part.model.translation = tree2_positions[i];
-			part.model.rotation = rot;
-			part.model.scaling = scale;
-			draw(part, environment);
-		}
-	}
-
-	// Cubes
-	draw(cube1, environment);
-	draw(cube2, environment);
-
-	// Ship
-	draw(ship, environment);
-
-	// Oiseaux (tous les groupes)
-	for (auto& group : bird_groups) {
-
-		float cycle = std::fmod(timer.t, group.tour_duration);
-		float u = cycle / group.tour_duration;
+	// Compute the center position and orientation of a bird group at time t,
+	// shared between the shadow pass and the main pass.
+	auto compute_group_frame = [](BirdGroup const& group, float t) -> std::pair<vec3, rotation_transform>
+	{
 		vec3 group_center;
 		vec3 group_dir;
 
 		if (group.forest_bird) {
+			float cycle = std::fmod(t, group.tour_duration);
+			float u = cycle / group.tour_duration;
+
 			if (u < 0.1f) {
 				float blend = u / 0.1f;
 				vec3 tour_start = { group.orbit_radius_x, 0.0f, group.base_altitude };
@@ -833,46 +867,114 @@ void scene_structure::display_frame()
 			}
 		}
 		else {
-			float angle = group.angular_speed * timer.t + group.phase;
+			float angle = group.angular_speed * t + group.phase;
 			group_center = {
 				group.orbit_radius_x * std::cos(angle),
 				group.orbit_radius_y * std::sin(angle),
-				group.base_altitude + 1.2f * std::sin(0.7f * timer.t + group.phase)
+				group.base_altitude + 1.2f * std::sin(0.7f * t + group.phase)
 			};
 			group_dir = normalize(vec3{
 				-group.orbit_radius_x * group.angular_speed * std::sin(angle),
 				 group.orbit_radius_y * group.angular_speed * std::cos(angle),
-				 0.7f * 0.7f * std::cos(0.7f * timer.t + group.phase)
+				 0.7f * 0.7f * std::cos(0.7f * t + group.phase)
 				});
 		}
 
 		rotation_transform group_rotation =
 			rotation_transform::from_vector_transform({ 1.0f, 0.0f, 0.0f }, group_dir);
+		return { group_center, group_rotation };
+	};
 
-		float fr_x = 0.5f + 0.1f * group.count;
-		float fr_y = 0.3f + 0.05f * group.count;
+	// Draw all the shapes
 
-		for (int bi = 0; bi < group.count; ++bi) {
-			float theta = 2.0f * Pi * float(bi) / float(group.count);
-			vec3 local_offset = {
-				fr_x * std::cos(theta),
-				fr_y * std::sin(theta),
-				0.05f * std::sin(1.5f * theta)
-			};
-			vec3 pos = group_center + group_rotation * local_offset;
+	// ---------- Shadow pass ----------
+	GLint prev_viewport[4]; glGetIntegerv(GL_VIEWPORT, prev_viewport);
+	glViewport(0, 0, shadow_fbo.width, shadow_fbo.height);
+	shadow_fbo.bind();
+	glClear(GL_DEPTH_BUFFER_BIT);
 
-			bird_body.model.scaling = group.scale;
-			bird_body.model.translation = pos;
-			bird_body.model.rotation = group_rotation;
-			draw(bird_body, environment);
+	mat4 prev_proj = environment.camera_projection;
+	mat4 prev_view = environment.camera_view;
+	environment.camera_projection = light_view_projection;
+	environment.camera_view = mat4::build_identity();
 
-			bird_left_wing.model.scaling = group.scale;
-			bird_right_wing.model.scaling = group.scale;
-			bird_left_wing.model.translation = pos;
-			bird_right_wing.model.translation = pos;
-			draw(bird_left_wing, environment);
-			draw(bird_right_wing, environment);
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(2.0f, 4.0f);
+
+	// Terrain
+	draw(terrain, environment);
+
+	// Palmiers - instanced: one draw call for all instances (shadow pass)
+	{
+		std::vector<mat4> palm_models;
+		palm_models.reserve(tree_positions.size());
+		for (int i = 0; i < tree_positions.size(); ++i) {
+			float angle_aleatoire = float(i) * 1.37f;
+			rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
+			rotation_transform rot = pivot * tree.model.rotation;
+			float scale = (i < tree_scales.size()) ? tree_scales[i] : 1.0f;
+			palm_models.push_back(affine(rot, tree_positions[i], scale).matrix());
 		}
+		std::vector<vec3> const palm_white(palm_models.size(), vec3{ 1.0f, 1.0f, 1.0f });
+		draw_part_instanced(tree, palm_models, palm_white);
+	}
+
+	// Tree2 - instanced: one draw call per part for all instances (shadow pass)
+	{
+		std::vector<mat4> tree2_models;
+		tree2_models.reserve(tree2_positions.size());
+		for (int i = 0; i < tree2_positions.size(); ++i) {
+			rotation_transform redressement = rotation_transform::from_axis_angle({ 1, 0, 0 }, 3.14159f / 2.0f);
+			float angle_aleatoire = float(i) * 1.37f;
+			rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
+			rotation_transform rot = pivot * redressement;
+			float scale = (i < tree2_scales.size()) ? tree2_scales[i] : 1.0f;
+
+			tree2_models.push_back(affine(rot, tree2_positions[i], scale).matrix());
+		}
+
+		std::vector<vec3> const tree2_white(tree2_models.size(), vec3{ 1.0f, 1.0f, 1.0f });
+		for (auto& part : tree2_parts)
+			draw_part_instanced(part, tree2_models, tree2_white);
+	}
+
+	// Cubes
+	draw(cube1, environment);
+	draw(cube2, environment);
+
+	// Ship
+	draw(ship, environment);
+
+	// Oiseaux (tous les groupes) - shadow casters, drawn instanced (1 draw call per part)
+	{
+		std::vector<mat4> shadow_body_models, shadow_lwing_models, shadow_rwing_models;
+
+		for (auto& group : bird_groups) {
+			auto [group_center, group_rotation] = compute_group_frame(group, timer.t);
+
+			float fr_x = 0.5f + 0.1f * group.count;
+			float fr_y = 0.3f + 0.05f * group.count;
+
+			for (int bi = 0; bi < group.count; ++bi) {
+				float theta = 2.0f * Pi * float(bi) / float(group.count);
+				vec3 local_offset = {
+					fr_x * std::cos(theta),
+					fr_y * std::sin(theta),
+					0.05f * std::sin(1.5f * theta)
+				};
+				vec3 pos = group_center + group_rotation * local_offset;
+
+				mat4 const M = affine(group_rotation, pos, group.scale).matrix();
+				shadow_body_models.push_back(M);
+				shadow_lwing_models.push_back(M);
+				shadow_rwing_models.push_back(M);
+			}
+		}
+
+		std::vector<vec3> const shadow_white(shadow_body_models.size(), vec3{ 1.0f, 1.0f, 1.0f });
+		draw_part_instanced(bird_body, shadow_body_models, shadow_white);
+		draw_part_instanced(bird_left_wing, shadow_lwing_models, shadow_white);
+		draw_part_instanced(bird_right_wing, shadow_rwing_models, shadow_white);
 	}
 
 	glDisable(GL_POLYGON_OFFSET_FILL);
@@ -922,8 +1024,12 @@ void scene_structure::display_frame()
 	}
 	water_mesh.normal_update();
 
-	// Update GPU with new water mesh (re-upload)
-	water.initialize_data_on_gpu(water_mesh);
+	// Update GPU buffers in place (no reallocation).
+	// NOTE: calling initialize_data_on_gpu() here every frame would re-create a brand new
+	// VAO/VBO/EBO set without freeing the previous ones, leaking GPU memory every single
+	// frame and causing the renderer to get progressively (and dramatically) slower.
+	water.vbo_position.update(water_mesh.position);
+	water.vbo_normal.update(water_mesh.normal);
 	water.material.color = {
 	0.25f,
 	0.52f,
@@ -976,43 +1082,45 @@ void scene_structure::display_frame()
 	ship.model.translation = {5.0f, 15.50f + 0.1 * sin(1.2f * time), 0.50f + 0.1f * cos(1.5f * time)};
 	draw(ship, environment);
 
-	// --- AFFICHAGE DE LA FORÊT ---
-	for (int i = 0; i < tree_positions.size(); ++i) {
+	// --- AFFICHAGE DE LA FORÊT --- (instanced: one draw call for all palm trees)
+	{
+		std::vector<mat4> palm_models;
+		palm_models.reserve(tree_positions.size());
+		for (int i = 0; i < tree_positions.size(); ++i) {
+			// 1. La rotation pour "Redresser" l'arbre (90° autour de l'axe X)
+			rotation_transform redressement = rotation_transform::from_axis_angle({ 1, 0, 0 }, 3.14159f / 2.0f);
 
-		tree.model.translation = tree_positions[i];
+			// 2. La rotation pour "Pivoter" aléatoirement le tronc (autour de l'axe Z)
+			float angle_aleatoire = float(i) * 1.37f;
+			rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
 
-		// 1. La rotation pour "Redresser" l'arbre (90° autour de l'axe X)
-		rotation_transform redressement = rotation_transform::from_axis_angle({ 1, 0, 0 }, 3.14159f / 2.0f);
+			// 3. On multiplie les deux rotations
+			rotation_transform rot = pivot * redressement;
 
-		// 2. La rotation pour "Pivoter" aléatoirement le tronc (autour de l'axe Z)
-		float angle_aleatoire = float(i) * 1.37f;
-		rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
-
-		// 3. On multiplie les deux rotations
-		tree.model.rotation = pivot * redressement;
-
-		// Apply per-tree scaling if available
-		if (i < tree_scales.size())
-			tree.model.scaling = tree_scales[i];
-
-		draw(tree, environment);
+			float scale = (i < tree_scales.size()) ? tree_scales[i] : 1.0f;
+			palm_models.push_back(affine(rot, tree_positions[i], scale).matrix());
+		}
+		std::vector<vec3> const palm_white(palm_models.size(), vec3{ 1.0f, 1.0f, 1.0f });
+		draw_part_instanced(tree, palm_models, palm_white);
 	}
 
-	for (int i = 0; i < tree2_positions.size(); ++i) {
+	// Tree2 - instanced: one draw call per part for all instances (main pass)
+	{
+		std::vector<mat4> tree2_models;
+		tree2_models.reserve(tree2_positions.size());
+		for (int i = 0; i < tree2_positions.size(); ++i) {
+			rotation_transform redressement = rotation_transform::from_axis_angle({ 1, 0, 0 }, 3.14159f / 2.0f);
+			float angle_aleatoire = float(i) * 1.37f;
+			rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
+			rotation_transform rot = pivot * redressement;
+			float scale = (i < tree2_scales.size()) ? tree2_scales[i] : 1.0f;
 
-		rotation_transform redressement = rotation_transform::from_axis_angle({ 1, 0, 0 }, 3.14159f / 2.0f);
-		float angle_aleatoire = float(i) * 1.37f;
-		rotation_transform pivot = rotation_transform::from_axis_angle({ 0, 0, 1 }, angle_aleatoire);
-		rotation_transform rot = pivot * redressement;
-		float scale = (i < tree2_scales.size()) ? tree2_scales[i] : 1.0f;
-
-		// Dessiner toutes les parties au même endroit
-		for (auto& part : tree2_parts) {
-			part.model.translation = tree2_positions[i];
-			part.model.rotation = rot;
-			part.model.scaling = scale;
-			draw(part, environment);
+			tree2_models.push_back(affine(rot, tree2_positions[i], scale).matrix());
 		}
+
+		std::vector<vec3> const tree2_white(tree2_models.size(), vec3{ 1.0f, 1.0f, 1.0f });
+		for (auto& part : tree2_parts)
+			draw_part_instanced(part, tree2_models, tree2_white);
 	}
 
 
@@ -1059,204 +1167,122 @@ void scene_structure::display_frame()
 	draw(treasure_chest, environment);
 	environment.uniform_generic.uniform_int["use_shadow"] = 1;
 
-	//Drawing the bird
+	//Drawing the birds (instanced: 5 draw calls total instead of one per bird part)
 
 	float t = timer.t;
-	float angle = bird_angular_speed * t;
+	{
+		std::vector<mat4> body_models, head_models, beak_models, lwing_models, rwing_models;
+		std::vector<vec3> body_colors, head_colors, wing_colors;
 
-	bird_position = {
-		bird_orbit_radius_x * std::cos(angle),
-		bird_orbit_radius_y * std::sin(angle),
-		bird_base_altitude + 1.0f * std::sin(0.7f * t)
-	};
+		// Append the 5 model matrices + colors of one bird to the per-part buffers
+		auto add_bird = [&](vec3 const& pos, rotation_transform const& body_rotation, float scale,
+			vec3 const& head_local_position, vec3 const& beak_local_position,
+			rotation_transform const& left_wing_rotation, rotation_transform const& right_wing_rotation,
+			vec3 const& body_color, vec3 const& head_color, vec3 const& wing_color)
+		{
+			body_models.push_back(affine(body_rotation, pos, scale).matrix());
+			body_colors.push_back(body_color);
 
-	bird_direction = normalize(vec3{
-		-bird_orbit_radius_x * bird_angular_speed * std::sin(angle),
-		 bird_orbit_radius_y * bird_angular_speed * std::cos(angle),
-		 0.7f * std::cos(0.7f * t)
-		});
+			head_models.push_back(affine(body_rotation, pos + body_rotation * head_local_position, scale).matrix());
+			head_colors.push_back(head_color);
 
-	vec3 forward = normalize(bird_direction);
+			beak_models.push_back(affine(body_rotation, pos + body_rotation * beak_local_position, scale).matrix());
 
-	rotation_transform bird_rotation =
-		rotation_transform::from_vector_transform(
-			{ 1.0f, 0.0f, 0.0f },
-			bird_direction
-		);
+			lwing_models.push_back(affine(left_wing_rotation, pos, scale).matrix());
+			rwing_models.push_back(affine(right_wing_rotation, pos, scale).matrix());
+			wing_colors.push_back(wing_color);
+		};
 
-	// Corps
+		// --- "Leader" flock of 10 birds ---
+		float angle = bird_angular_speed * t;
 
-	// Draw a flock of birds (10) using the same drawable objects
-	// Each bird is placed around the leader position with a small formation offset
-	const int flock_size = 10;
-	const float formation_radius_x = 0.8f;
-	const float formation_radius_y = 0.4f;
-	for (int bi = 0; bi < flock_size; ++bi) {
+		bird_position = {
+			bird_orbit_radius_x * std::cos(angle),
+			bird_orbit_radius_y * std::sin(angle),
+			bird_base_altitude + 1.0f * std::sin(0.7f * t)
+		};
 
-		float theta = 2.0f * Pi * float(bi) / float(flock_size);
-		// small elliptical formation around the main bird position
-		vec3 local_offset = { formation_radius_x * std::cos(theta), formation_radius_y * std::sin(theta), 0.05f * std::sin(1.5f * theta) };
+		bird_direction = normalize(vec3{
+			-bird_orbit_radius_x * bird_angular_speed * std::sin(angle),
+			 bird_orbit_radius_y * bird_angular_speed * std::cos(angle),
+			 0.7f * std::cos(0.7f * t)
+			});
 
-		// per-bird slight altitude jitter and phase-shifted wing
-		vec3 this_position = bird_position + bird_rotation * local_offset;
-		float wing_phase = 0.5f * std::sin(2.0f * Pi * timer.t + bi * 0.6f);
-		float this_wing_angle = bird_wing_angle + wing_phase;
+		rotation_transform bird_rotation =
+			rotation_transform::from_vector_transform(
+				{ 1.0f, 0.0f, 0.0f },
+				bird_direction
+			);
 
-		rotation_transform left_wing_flap = rotation_transform::from_axis_angle({ 1.0f, 0.0f, 0.0f }, this_wing_angle);
-		rotation_transform right_wing_flap = rotation_transform::from_axis_angle({ 1.0f, 0.0f, 0.0f }, -this_wing_angle);
+		const int flock_size = 10;
+		const float formation_radius_x = 0.8f;
+		const float formation_radius_y = 0.4f;
+		const float flock_scale = 0.2f;
+		const vec3 flock_body_color = { 0.65f, 0.65f, 0.68f };
+		const vec3 flock_head_color = { 0.8f, 0.8f, 0.82f };
+		const vec3 flock_wing_color = { 0.55f, 0.55f, 0.58f };
 
-		// Body
-		bird_body.model.rotation = bird_rotation;
-		bird_body.model.translation = this_position;
-		draw(bird_body, environment);
+		for (int bi = 0; bi < flock_size; ++bi) {
 
-		// Head
-		vec3 head_local_position = { 0.2f * 1.3f, 0.0f, 0.2f * 0.15f };
-		bird_head.model.translation = this_position + bird_rotation * head_local_position;
-		bird_head.model.rotation = bird_rotation;
-		draw(bird_head, environment);
+			float theta = 2.0f * Pi * float(bi) / float(flock_size);
+			// small elliptical formation around the main bird position
+			vec3 local_offset = { formation_radius_x * std::cos(theta), formation_radius_y * std::sin(theta), 0.05f * std::sin(1.5f * theta) };
 
-		// Beak
-		vec3 beak_local_position = { 0.2f * 1.75f, 0.0f, 0.2f * 0.15f };
-		bird_beak.model.translation = this_position + bird_rotation * beak_local_position;
-		bird_beak.model.rotation = bird_rotation;
-		draw(bird_beak, environment);
+			// per-bird slight altitude jitter and phase-shifted wing
+			vec3 this_position = bird_position + bird_rotation * local_offset;
+			float wing_phase = 0.5f * std::sin(2.0f * Pi * t + bi * 0.6f);
+			float this_wing_angle = bird_wing_angle + wing_phase;
 
-		// Left wing
-		bird_left_wing.model.translation = this_position;
-		bird_left_wing.model.rotation = bird_rotation * left_wing_flap;
-		draw(bird_left_wing, environment);
+			rotation_transform left_wing_flap = rotation_transform::from_axis_angle({ 1.0f, 0.0f, 0.0f }, this_wing_angle);
+			rotation_transform right_wing_flap = rotation_transform::from_axis_angle({ 1.0f, 0.0f, 0.0f }, -this_wing_angle);
 
-		// Right wing
-		bird_right_wing.model.translation = this_position;
-		bird_right_wing.model.rotation = bird_rotation * right_wing_flap;
-		draw(bird_right_wing, environment);
-	}
+			vec3 head_local_position = { 0.2f * 1.3f, 0.0f, 0.2f * 0.15f };
+			vec3 beak_local_position = { 0.2f * 1.75f, 0.0f, 0.2f * 0.15f };
 
-
-
-	for (auto& group : bird_groups) {
-
-		vec3 group_center;
-		vec3 group_dir;
-
-		if (group.forest_bird) {
-
-			float cycle = std::fmod(t, group.tour_duration);
-			float u = cycle / group.tour_duration; // 0 → 1 sur toute la durée
-
-			// Phase 0.0→0.1 : sortie du nid (montée verticale)
-			// Phase 0.1→0.9 : tour de l'île
-			// Phase 0.9→1.0 : retour au nid (descente)
-
-			vec3 tour_pos;
-			float angle = 2.0f * Pi * ((u - 0.1f) / 0.8f); // angle sur le tour
-
-			vec3 above_nest = group.nest_position + vec3{ 0, 0, group.base_altitude };
-
-			if (u < 0.1f) {
-				// Sortie : interpolation entre nid et début du tour
-				float blend = u / 0.1f;
-				vec3 tour_start = {
-					group.orbit_radius_x,
-					0.0f,
-					group.base_altitude
-				};
-				group_center = group.nest_position + blend * (tour_start - group.nest_position);
-				group_dir = normalize(tour_start - group.nest_position);
-
-			}
-			else if (u < 0.9f) {
-				// Tour de l'île
-				float a = 2.0f * Pi * ((u - 0.1f) / 0.8f);
-				group_center = {
-					group.orbit_radius_x * std::cos(a),
-					group.orbit_radius_y * std::sin(a),
-					group.base_altitude + 0.8f * std::sin(2.0f * a)
-				};
-				group_dir = normalize(vec3{
-					-group.orbit_radius_x * std::sin(a),
-					 group.orbit_radius_y * std::cos(a),
-					 0.0f
-					});
-
-			}
-			else {
-				// Retour au nid
-				float blend = (u - 0.9f) / 0.1f;
-				vec3 tour_end = {
-					group.orbit_radius_x,
-					0.0f,
-					group.base_altitude
-				};
-				group_center = tour_end + blend * (group.nest_position - tour_end);
-				group_dir = normalize(group.nest_position - tour_end);
-			}
-
-		}
-		else {
-			// Comportement normal des autres groupes (inchangé)
-			float angle = group.angular_speed * t + group.phase;
-			group_center = {
-				group.orbit_radius_x * std::cos(angle),
-				group.orbit_radius_y * std::sin(angle),
-				group.base_altitude + 1.2f * std::sin(0.7f * t + group.phase)
-			};
-			group_dir = normalize(vec3{
-				-group.orbit_radius_x * group.angular_speed * std::sin(angle),
-				 group.orbit_radius_y * group.angular_speed * std::cos(angle),
-				 0.7f * 0.7f * std::cos(0.7f * t + group.phase)
-				});
+			add_bird(this_position, bird_rotation, flock_scale,
+				head_local_position, beak_local_position,
+				bird_rotation * left_wing_flap, bird_rotation * right_wing_flap,
+				flock_body_color, flock_head_color, flock_wing_color);
 		}
 
-		// Le reste du dessin est identique pour tous les groupes
-		rotation_transform group_rotation =
-			rotation_transform::from_vector_transform({ 1.0f, 0.0f, 0.0f }, group_dir);
+		// --- Bird groups ---
+		for (auto& group : bird_groups) {
+			auto [group_center, group_rotation] = compute_group_frame(group, t);
 
-		float fr_x = 0.5f + 0.1f * group.count;
-		float fr_y = 0.3f + 0.05f * group.count;
+			float fr_x = 0.5f + 0.1f * group.count;
+			float fr_y = 0.3f + 0.05f * group.count;
 
-		for (int bi = 0; bi < group.count; ++bi) {
-			float theta = 2.0f * Pi * float(bi) / float(group.count);
-			vec3 local_offset = {
-				fr_x * std::cos(theta),
-				fr_y * std::sin(theta),
-				0.05f * std::sin(1.5f * theta)
-			};
-			vec3 pos = group_center + group_rotation * local_offset;
+			for (int bi = 0; bi < group.count; ++bi) {
+				float theta = 2.0f * Pi * float(bi) / float(group.count);
+				vec3 local_offset = {
+					fr_x * std::cos(theta),
+					fr_y * std::sin(theta),
+					0.05f * std::sin(1.5f * theta)
+				};
+				vec3 pos = group_center + group_rotation * local_offset;
 
-			float wing_phase = bird_wing_amplitude * std::sin(bird_wing_frequency * t + bi * 0.6f + group.phase);
-			rotation_transform left_flap = rotation_transform::from_axis_angle({ 1,0,0 }, wing_phase);
-			rotation_transform right_flap = rotation_transform::from_axis_angle({ 1,0,0 }, -wing_phase);
+				float wing_phase = bird_wing_amplitude * std::sin(bird_wing_frequency * t + bi * 0.6f + group.phase);
+				rotation_transform left_flap = rotation_transform::from_axis_angle({ 1,0,0 }, wing_phase);
+				rotation_transform right_flap = rotation_transform::from_axis_angle({ 1,0,0 }, -wing_phase);
 
-			bird_body.material.color = group.color;
-			bird_body.model.scaling = group.scale;
-			bird_body.model.translation = pos;
-			bird_body.model.rotation = group_rotation;
-			draw(bird_body, environment);
+				vec3 head_local_position = { group.scale * 0.2f * 1.3f, 0.0f, 0.03f };
+				vec3 beak_local_position = { group.scale * 0.2f * 1.75f, 0.0f, 0.03f };
 
-			bird_head.material.color = group.color * 1.1f;
-			bird_head.model.scaling = group.scale;
-			bird_head.model.translation = pos + group_rotation * vec3{ group.scale * 0.2f * 1.3f, 0.0f, 0.03f };
-			bird_head.model.rotation = group_rotation;
-			draw(bird_head, environment);
-
-			bird_beak.model.scaling = group.scale;
-			bird_beak.model.translation = pos + group_rotation * vec3{ group.scale*0.2f * 1.75f, 0.0f, 0.03f };
-			bird_beak.model.rotation = group_rotation;
-			draw(bird_beak, environment);
-
-			bird_left_wing.material.color = group.color * 0.85f;
-			bird_right_wing.material.color = group.color * 0.85f;
-			bird_left_wing.model.scaling = group.scale;
-			bird_right_wing.model.scaling = group.scale;
-			bird_left_wing.model.translation = pos;
-			bird_right_wing.model.translation = pos;
-			bird_left_wing.model.rotation = group_rotation * left_flap;
-			bird_right_wing.model.rotation = group_rotation * right_flap;
-			draw(bird_left_wing, environment);
-			draw(bird_right_wing, environment);
+				add_bird(pos, group_rotation, group.scale,
+					head_local_position, beak_local_position,
+					group_rotation * left_flap, group_rotation * right_flap,
+					group.color, group.color * 1.1f, group.color * 0.85f);
+			}
 		}
+
+		// Beak color is constant for every bird (set once on bird_beak.material.color)
+		std::vector<vec3> const beak_colors(beak_models.size(), vec3{ 1.0f, 1.0f, 1.0f });
+
+		draw_part_instanced(bird_body, body_models, body_colors);
+		draw_part_instanced(bird_head, head_models, head_colors);
+		draw_part_instanced(bird_beak, beak_models, beak_colors);
+		draw_part_instanced(bird_left_wing, lwing_models, wing_colors);
+		draw_part_instanced(bird_right_wing, rwing_models, wing_colors);
 	}
 
 

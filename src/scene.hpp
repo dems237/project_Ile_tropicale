@@ -141,8 +141,31 @@ struct scene_structure : cgp::scene_inputs_generic {
 	float bird_wing_amplitude = 0.6f;
 	float bird_wing_frequency = 3.0f;
 
+	// ****************************** //
+	// GPU instancing (birds, forest trees, ...)
+	// ****************************** //
+
+	// Maximum number of instances drawable in a single instanced draw call.
+	// Shared by birds and "tree2" forest parts.
+	static constexpr int max_instances = 256;
+
+	// Per-instance scratch buffers reused every frame (avoids reallocation)
+	cgp::numarray<cgp::vec4> instance_col0 = cgp::numarray<cgp::vec4>(max_instances);
+	cgp::numarray<cgp::vec4> instance_col1 = cgp::numarray<cgp::vec4>(max_instances);
+	cgp::numarray<cgp::vec4> instance_col2 = cgp::numarray<cgp::vec4>(max_instances);
+	cgp::numarray<cgp::vec4> instance_col3 = cgp::numarray<cgp::vec4>(max_instances);
+	cgp::numarray<cgp::vec3> instance_color = cgp::numarray<cgp::vec3>(max_instances);
+
+	// Setup the per-instance VBOs (model matrix columns + color) on a mesh part
+	void initialize_instancing(mesh_drawable& part);
+
+	// Upload per-instance model matrices/colors and issue a single instanced draw call
+	void draw_part_instanced(mesh_drawable& part, std::vector<cgp::mat4> const& models, std::vector<cgp::vec3> const& colors);
+
 	// Shadow mapping resources
-	int shadow_resolution = 2048;
+	// Lowered from 2048 to reduce fragment-shading cost of the shadow depth pass on
+	// integrated GPUs; 1024 is still plenty sharp for this scene's scale.
+	int shadow_resolution = 1024;
 	cgp::opengl_fbo_structure shadow_fbo;
 	cgp::mat4 light_view_projection; 
 	cgp::vec3 light_direction = { -0.5f, -0.6f, -1.0f };
