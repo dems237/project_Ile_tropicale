@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{842682F3-E01B-32F6-848E-ABAAB8B4CC1A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>project</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">project.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">project</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project</LocalDebuggerWorkingDirectory>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">project.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">project</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project</LocalDebuggerWorkingDirectory>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">project.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">project</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project</LocalDebuggerWorkingDirectory>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">project.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">project</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>
+      </BufferSecurityCheck>
+      <CallingConvention>
+      </CallingConvention>
+      <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4127;4267;4244;4996;26451;26495;4305;4458</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>
+      </FloatingPointModel>
+      <ForceConformanceInForLoopScope>
+      </ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData>
+      </RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType>
+      </TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\lib-visual\glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/Debug/project.lib</ImportLibrary>
+      <LinkErrorReporting>
+      </LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/project.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress>
+      </RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>
+      </BufferSecurityCheck>
+      <CallingConvention>
+      </CallingConvention>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>4127;4267;4244;4996;26451;26495;4305;4458</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>
+      </FloatingPointModel>
+      <ForceConformanceInForLoopScope>
+      </ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData>
+      </RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType>
+      </TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\lib-visual\glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/Release/project.lib</ImportLibrary>
+      <LinkErrorReporting>
+      </LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/project.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress>
+      </RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>
+      </BufferSecurityCheck>
+      <CallingConvention>
+      </CallingConvention>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>4127;4267;4244;4996;26451;26495;4305;4458</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>
+      </FloatingPointModel>
+      <ForceConformanceInForLoopScope>
+      </ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData>
+      </RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType>
+      </TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\lib-visual\glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/MinSizeRel/project.lib</ImportLibrary>
+      <LinkErrorReporting>
+      </LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/project.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress>
+      </RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>
+      </BufferSecurityCheck>
+      <CallingConvention>
+      </CallingConvention>
+      <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4127;4267;4244;4996;26451;26495;4305;4458</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>
+      </FloatingPointModel>
+      <ForceConformanceInForLoopScope>
+      </ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>
+      </MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData>
+      </RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType>
+      </TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SOLUTION;CGP_OPENGL_3_3;IMGUI_IMPL_OPENGL_LOADER_GLAD;CGP_ERROR_EXCEPTION;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glfw\windows\lib-visual\glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/RelWithDebInfo/project.lib</ImportLibrary>
+      <LinkErrorReporting>
+      </LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/project.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress>
+      </RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project" "-BC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build" --check-stamp-file "C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeCXXCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeRCCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project" "-BC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build" --check-stamp-file "C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeCXXCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeRCCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project" "-BC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build" --check-stamp-file "C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeCXXCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeRCCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project" "-BC:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build" --check-stamp-file "C:/Users/demar/Documents/Cours 2A/P3/C++/TPs/csc43043ep-lab-code-main/csc43043ep-lab-code-main/08_project/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeCXXCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeRCCompiler.cmake;C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\4.3.0-rc2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\base.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\basic_types\basic_types.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\basic_types\basic_types.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\error\error.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\error\error.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\stl\stl.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\string\string.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\string\string.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\01_base\types\types.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray\numarray.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray\test\test_numarray.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray\test\test_numarray.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\implementation\numarray_stack.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\implementation\numarray_stack2.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\implementation\numarray_stack3.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\implementation\numarray_stack4.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\numarray_stack.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\numarray_stack_fwd.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\special_types\special_types.cpp">
+      <ObjectFileName>$(IntDir)cgp/02_numarray/numarray_stack/special_types/special_types.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\special_types\special_types.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\test\test_numarray_stack.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\02_numarray\numarray_stack\test\test_numarray_stack.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\03_files\files.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\03_files\files.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid\grid.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid\grid_2D\grid_2D.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid\grid_3D\grid_3D.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid\test\test_grid.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid\test\test_grid.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid_container.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid_stack\grid_stack.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid_stack\grid_stack_2D\grid_stack_2D.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid_stack\grid_stack_2D\test\test_grid_stack_2D.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\grid_stack\grid_stack_2D\test\test_grid_stack_2D.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\matrix_stack\matrix_stack.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\matrix_stack\matrix_stack_fwd.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\matrix_stack\special_types\definition\special_types.cpp">
+      <ObjectFileName>$(IntDir)cgp/04_grid_container/matrix_stack/special_types/definition/special_types.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\matrix_stack\special_types\definition\special_types.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\matrix_stack\special_types\special_types.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\offset_grid\offset_grid.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\04_grid_container\offset_grid\offset_grid.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\05_vec\vec.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\05_vec\vec2\vec2.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\05_vec\vec3\vec3.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\05_vec\vec4\vec4.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\functions\mat_functions.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\functions\mat_functions.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\functions\test\test_vec_mat.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\functions\test\test_vec_mat.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat2\mat2.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat2\mat2.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat3\mat3.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat3\mat3.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat4\mat4.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\mat4\mat4.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\test\test_matrix_stack.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\06_mat\test\test_matrix_stack.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\07_image\image.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\07_image\image.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\08_random_noise\noise\noise.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\08_random_noise\noise\noise.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\08_random_noise\rand\rand.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\08_random_noise\rand\rand.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\08_random_noise\random_noise.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine\affine.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine\affine.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine_rt\affine_rt.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine_rt\affine_rt.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine_rts\affine_rts.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\affine\affine_rts\affine_rts.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\frame\frame.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\frame\frame.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\geometric_transformation.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\interpolation\interpolation.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\interpolation\interpolation.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\projection\projection.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\projection\projection.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\quaternion\quaternion.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\quaternion\quaternion.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\rotation_transform\rotation_transform.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\rotation_transform\rotation_transform.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\rotation_transform\test\test_rotation.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\09_geometric_transformation\rotation_transform\test\test_rotation.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_first_person\camera_first_person.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_first_person\camera_first_person.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_first_person_euler\camera_first_person_euler.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_first_person_euler\camera_first_person_euler.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_generic_base\camera_generic_base.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_generic_base\camera_generic_base.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_model.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_orbit\camera_orbit.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_orbit\camera_orbit.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_orbit_euler\camera_orbit_euler.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\camera_orbit_euler\camera_orbit_euler.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\common_functions\common_functions.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_model\common_functions\common_functions.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_projection\camera_projection.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\10_camera_model\camera_projection\camera_projection.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\11_mesh\mesh.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\11_mesh\mesh\mesh.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\11_mesh\mesh\mesh.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\11_mesh\primitive\primitive.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\11_mesh\primitive\primitive.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\bounding_box\bounding_box.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\bounding_box\bounding_box.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\curve\curve.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\curve\curve.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\implicit\implicit.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\implicit\marching_cube\helper\marching_cubes_lut.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\implicit\marching_cube\helper\marching_cubes_lut.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\implicit\marching_cube\marching_cube.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\implicit\marching_cube\marching_cube.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\intersection\intersection.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\intersection\intersection.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\shape.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\spatial_domain\spatial_domain.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\spatial_domain\spatial_domain_grid_3D\spatial_domain_grid_3D.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\12_shape\spatial_domain\spatial_domain_grid_3D\spatial_domain_grid_3D.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\buffer.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\ebo\ebo.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\ebo\ebo.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\opengl_buffer\opengl_buffer.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\opengl_buffer\opengl_buffer.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\vbo\vbo.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\buffer\vbo\vbo.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\debug\debug.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\debug\debug.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\emscripten\emscripten.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\emscripten\emscripten.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\fbo\fbo.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\fbo\fbo.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\opengl.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\shaders\cache_uniform_location\cache_uniform_location.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\shaders\cache_uniform_location\cache_uniform_location.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\shaders\shaders.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\shaders\shaders.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\texture\texture.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\texture\texture.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\uniform\uniform.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\13_opengl\uniform\uniform.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\14_window\imgui\imgui.cpp">
+      <ObjectFileName>$(IntDir)cgp/14_window/imgui/imgui.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\14_window\imgui\imgui.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\14_window\window.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\14_window\window\window.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\14_window\window\window.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\15_input_devices\input_devices.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\15_input_devices\input_devices.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\curve_drawable\curve_drawable.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\curve_drawable\curve_drawable.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\curve_drawable_dynamic_extend\curve_drawable_dynamic_extend.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\curve_drawable_dynamic_extend\curve_drawable_dynamic_extend.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\drawable.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\environment\environment.cpp">
+      <ObjectFileName>$(IntDir)cgp/16_drawable/environment/environment.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\environment\environment.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\material\material.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\material\material_mesh_drawable_phong\material_mesh_drawable_phong.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\material\material_mesh_drawable_phong\material_mesh_drawable_phong.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\mesh_drawable\mesh_drawable.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\mesh_drawable\mesh_drawable.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\special_drawable\skybox_drawable\skybox_drawable.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\special_drawable\skybox_drawable\skybox_drawable.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\special_drawable\special_drawable.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\special_drawable\trajectory_drawable\trajectory_drawable.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\special_drawable\trajectory_drawable\trajectory_drawable.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\triangles_drawable\triangles_drawable.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\16_drawable\triangles_drawable\triangles_drawable.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_basic\timer_basic.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_basic\timer_basic.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_event_periodic\timer_event_periodic.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_event_periodic\timer_event_periodic.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_fps\timer_fps.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_fps\timer_fps.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_interval\timer_interval.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\17_timer\timer_interval\timer_interval.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking_plane\picking_plane.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking_plane\picking_plane.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking_spheres\picking_spheres.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking_spheres\picking_spheres.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking_structure\picking_structure.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\picking\picking_structure\picking_structure.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\tracker\tracker.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\tracker\velocity_tracker\velocity_tracker.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\tracker\velocity_tracker\velocity_tracker.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\18_user_interactions\user_interactions.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_2d_displacement\camera_controller_2d_displacement.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_2d_displacement\camera_controller_2d_displacement.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_first_person\camera_controller_first_person.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_first_person\camera_controller_first_person.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_first_person_euler\camera_controller_first_person_euler.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_first_person_euler\camera_controller_first_person_euler.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_fly_mode\camera_controller_fly_mode.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_fly_mode\camera_controller_fly_mode.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_generic_base\camera_controller_generic_base.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_generic_base\camera_controller_generic_base.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_orbit\camera_controller_orbit.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_orbit\camera_controller_orbit.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_orbit_euler\camera_controller_orbit_euler.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\camera_controller_orbit_euler\camera_controller_orbit_euler.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\test\test_camera_controller.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\19_camera_controller\test\test_camera_controller.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\20_format_parser\format_parser.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\20_format_parser\mesh_loader\mesh_loader.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\20_format_parser\mesh_loader\obj\obj.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\20_format_parser\mesh_loader\obj\obj.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\20_format_parser\mesh_loader\obj_advanced\obj_advanced.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\20_format_parser\mesh_loader\obj_advanced\obj_advanced.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\21_scene_project_helper\path\path.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\21_scene_project_helper\path\path.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\21_scene_project_helper\scene_project_helper.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\cgp.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\cgp_parameters.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\opengl_include.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl33\glad.cpp">
+      <ObjectFileName>$(IntDir)cgp/third_party/glad/opengl33/glad.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl33\glad.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl33\khrplatform.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl41\glad.cpp">
+      <ObjectFileName>$(IntDir)cgp/third_party/glad/opengl41/glad.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl41\glad.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl41\khrplatform.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl43\glad.cpp">
+      <ObjectFileName>$(IntDir)cgp/third_party/glad/opengl43/glad.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl43\glad.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl43\khrplatform.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl46\glad.cpp">
+      <ObjectFileName>$(IntDir)cgp/third_party/glad/opengl46/glad.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl46\glad.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\glad\opengl46\khrplatform.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui.cpp">
+      <ObjectFileName>$(IntDir)cgp/third_party/imgui/imgui.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui_demo.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui_draw.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui_tables.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\jpeg\jpgd.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\jpeg\jpge.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\lodepng\lodepng.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\simplexnoise\simplexnoise1234.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\simplexnoise\simplexnoise1234.hpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\cgp\third_party\tinyobj\tiny_obj_loader.hpp" />
+    <None Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\shaders\mesh\mesh.frag.glsl">
+    </None>
+    <None Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\shaders\mesh\mesh.vert.glsl">
+    </None>
+    <None Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\shaders\single_color\single_color.frag.glsl">
+    </None>
+    <None Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\shaders\single_color\single_color.vert.glsl">
+    </None>
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\application.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\application.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\environment.cpp">
+      <ObjectFileName>$(IntDir)src/environment.cpp.obj</ObjectFileName>
+    </ClCompile>
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\environment.hpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\main.cpp" />
+    <ClCompile Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\scene.cpp" />
+    <ClInclude Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\src\scene.hpp" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\ZERO_CHECK.vcxproj">
+      <Project>{30A9246A-462B-3827-8EEA-5FA256B3AE02}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

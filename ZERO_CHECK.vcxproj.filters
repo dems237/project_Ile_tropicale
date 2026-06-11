@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\demar\Documents\Cours 2A\P3\C++\TPs\csc43043ep-lab-code-main\csc43043ep-lab-code-main\08_project\build\CMakeFiles\eb4f0a9268831565097626d5cc705b8f\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{33AFBE08-6DFD-3539-A4B1-53C30A6AF246}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
